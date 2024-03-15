@@ -1,12 +1,11 @@
-"use client"
+import React from "react";
 
-import { Line } from "react-chartjs-2"
-
+import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   LineElement,
-  CategoryScale, // x axis
-  LinearScale, // y axis
+  CategoryScale,
+  LinearScale,
   PointElement,
   Legend,
   Tooltip,
@@ -23,29 +22,20 @@ ChartJS.register(
   Filler
 );
 
-const salesData = [
-  { month: "January", sales: 100 },
-  { month: "February", sales: 150 },
-  { month: "March", sales: 200 },
-  { month: "April", sales: 120 },
-  { month: "May", sales: 180 },
-  { month: "June", sales: 250 },
-];
-
-function LineChart() {
+function LineChart({ coordinates }) {
   const data = {
-    labels: salesData.map((data) => data.month),
+    labels: coordinates.map((coord) => coord.x),
     datasets: [
       {
         label: "Kurva Bezier",
-        data: salesData.map((data) => data.sales),
+        data: coordinates.map((coord) => coord.y),
         borderColor: "#b182e3",
         pointBorderColor: "#b182e3",
         pointBorderWidth: 3,
         backgroundColor: (context) => {
           const ctx = context.chart.ctx;
           const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-          gradient.addColorStop(0, "white");
+          gradient.addColorStop(0, "#b182e3");
           gradient.addColorStop(1, "white");
           return gradient;
         },
@@ -78,12 +68,12 @@ function LineChart() {
             family: "Arial",
           },
         },
-        min: 50,
+        min: 0,
       },
       x: {
         ticks: {
           font: {
-            size: 14,
+            size: 12,
             weight: "bold",
           },
         },
@@ -94,7 +84,7 @@ function LineChart() {
             top: 10,
           },
           font: {
-            size: 14,
+            size: 12,
             style: "",
             family: "Arial",
           },
@@ -103,9 +93,7 @@ function LineChart() {
     },
   };
 
-  return (
-    <Line data={data} options={options}></Line>
-  );
+  return <Line data={data} options={options}></Line>;
 }
 
 export default LineChart;
