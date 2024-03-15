@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import LineChart from "@/components/LineChart";
 
 import { Button } from "@/components/ui/button";
@@ -13,11 +14,12 @@ import {
 } from "@/components/ui/tabs"
 
 export default function Home() { 
-  const [mode, setMode] = useState("3P");
   const [npoints, setNpoints] = useState(3);
   const [iter, setIter] = useState(1);
   const [tempCoordinates, setTempCoordinates] = useState([]);
   const [useCoordinates, setUseCoordinates] = useState([])
+
+  const router = useRouter();
 
   const handleCoordinateChange = (index, axis, value) => {
     setTempCoordinates(prevCoordinates => {
@@ -33,6 +35,13 @@ export default function Home() {
     // Fungsi sementara, TO DO mengganti
     setUseCoordinates(tempCoordinates);
     setTempCoordinates([])
+    router.push("/")
+  }
+
+  const handleReset = () => {
+    setUseCoordinates([])
+    setTempCoordinates([])
+    router.refresh()
   }
 
   const handleSubmitDnC = () => {
@@ -65,11 +74,13 @@ export default function Home() {
         {/* MENERIMA MASUKKAN POINTS */}
         <div className="w-full h-full min-h-[550px] bg-white/15 rounded-xl p-4 flex flex-col md:items-start justify-between gap-y-4">
           
+          {/* INPUT POINTS */}
           <div className="space-y-8">
             <Tabs defaultValue="3-Points">
+              {/* PILIH MODE */}
               <TabsList className="bg-black text-white">
-                <TabsTrigger value="3-Points" onClick={() => setMode("3P")}>3-Points</TabsTrigger>
-                <TabsTrigger value="N-Points" onClick={() => setMode("NP")}>N-Points</TabsTrigger>
+                <TabsTrigger value="3-Points">3-Points</TabsTrigger>
+                <TabsTrigger value="N-Points">N-Points</TabsTrigger>
               </TabsList>
 
               {/* MASUKKAN 3POINT */}
@@ -106,13 +117,17 @@ export default function Home() {
               </TabsContent>
             </Tabs>
 
-            {/* SAVE POINTS */}
-            <Button onClick={handleSavePoints}>Save Points</Button>
+            {/* SAVE POINTS*/}
+            <div className="space-x-4">
+              <Button onClick={handleSavePoints}>Save Points</Button>
+              <Button onClick={handleReset}>Reset</Button>
+            </div>
           </div>
           
 
           {/* SUBMIT POINTS */}
           <div className="w-full flex flex-col justify-center md:justify-start gap-y-4">
+            <div className="w-full h-[1px] bg-white/25" />
             <div className="space-y-2">
               <p className="font-semibold">Masukkan jumlah iterasi</p>
               <Input placeholder="1" value={iter} onChange={(e) => setIter(e)} className="max-w-[250px]" />
@@ -122,7 +137,6 @@ export default function Home() {
               <Button onClick={handleSubmitBF}>Submit with BF</Button>
             </div>
           </div>
-
         </div>
       </div>
     </main>
