@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 import LineChart from "@/components/LineChart";
+import { DivideAndConquer } from "@/utils/DivideAndConquer";
+import { BruteForce } from "@/utils/BruteForce";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -16,7 +20,8 @@ export default function Home() {
   const [npoints, setNpoints] = useState(3);
   const [iter, setIter] = useState(1);
   const [tempCoordinates, setTempCoordinates] = useState([]);
-  const [useCoordinates, setUseCoordinates] = useState([])
+  const [useCoordinates, setUseCoordinates] = useState([]);
+  const [resultCoordinates, setResultCoordinates] = useState([]);
 
   const router = useRouter();
 
@@ -41,7 +46,6 @@ export default function Home() {
   };
 
   const handleSavePoints = () => {
-    // Fungsi sementara, TO DO mengganti
     console.log(tempCoordinates)
     setUseCoordinates(tempCoordinates);
     setTempCoordinates([])
@@ -55,10 +59,18 @@ export default function Home() {
 
   const handleSubmitDnC = () => {
     console.log("Submit DnC");
+    const result = BruteForce(useCoordinates, iter);
+    console.log(result);
+
+    setResultCoordinates(result);
   }
 
   const handleSubmitBF = () => {
     console.log("Submit BF");
+    const result = DivideAndConquer(useCoordinates, iter);
+    console.log(result);
+
+    setResultCoordinates(result);
   }
   
 
@@ -77,7 +89,7 @@ export default function Home() {
 
         {/* MENAMPILKAN GRAFIK */}
         <div className="w-full h-full min-h-[550px] bg-white rounded-xl p-4 flex flex-col items-center justify-center">
-          <LineChart coordinates={useCoordinates} />
+          <LineChart coordinates={resultCoordinates} />
         </div>
 
         {/* MENERIMA MASUKKAN POINTS */}
