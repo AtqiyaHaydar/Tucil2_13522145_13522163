@@ -30,15 +30,9 @@ function LineChart({ coordinates }) {
         label: "Kurva Bezier",
         data: coordinates.map((coord) => coord.y),
         borderColor: "#b182e3",
+        borderWidth: 3,
         pointBorderColor: "#b182e3",
         pointBorderWidth: 3,
-        backgroundColor: (context) => {
-          const ctx = context.chart.ctx;
-          const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-          gradient.addColorStop(0, "#b182e3");
-          gradient.addColorStop(1, "white");
-          return gradient;
-        },
       },
     ],
   };
@@ -46,6 +40,7 @@ function LineChart({ coordinates }) {
   const options = {
     plugins: {
       legend: true,
+      type: "line",
     },
     responsive: true,
     scales: {

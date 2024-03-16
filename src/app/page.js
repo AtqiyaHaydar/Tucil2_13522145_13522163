@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import LineChart from "@/components/LineChart";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -24,8 +23,18 @@ export default function Home() {
   const handleCoordinateChange = (index, axis, value) => {
     setTempCoordinates(prevCoordinates => {
       const updatedCoordinates = [...prevCoordinates];
-      const coordinate = updatedCoordinates[index] || {}; // Membuat objek koordinat baru jika belum ada
-      coordinate[axis] = value; // Mengatur nilai sumbu x atau y sesuai dengan sumbu yang dipilih
+      const coordinate = updatedCoordinates[index] || {};
+
+      if (axis === 'x') {
+        if (coordinate.y === 0 && coordinate.x !== undefined && coordinate.x.length > 1) {
+          coordinate.x = value;
+        } else {
+          coordinate[axis] = value;
+        }
+      } else {
+        coordinate[axis] = value;
+      }
+
       updatedCoordinates[index] = coordinate;
       return updatedCoordinates;
     });
@@ -33,9 +42,9 @@ export default function Home() {
 
   const handleSavePoints = () => {
     // Fungsi sementara, TO DO mengganti
+    console.log(tempCoordinates)
     setUseCoordinates(tempCoordinates);
     setTempCoordinates([])
-    router.push("/")
   }
 
   const handleReset = () => {
@@ -87,15 +96,15 @@ export default function Home() {
               <TabsContent value="3-Points" className="flex flex-row gap-x-4 mt-8">
                 <div className="space-y-2 text-black">
                   <p className="text-white">Sumbu-X</p>
-                  <Input type="number" onChange={(e) => setTempCoordinates(prevState => [...prevState, { x: e.target.value }])} />
-                  <Input type="number" onChange={(e) => setTempCoordinates(prevState => [...prevState, { x: e.target.value }])} />
-                  <Input type="number" onChange={(e) => setTempCoordinates(prevState => [...prevState, { x: e.target.value }])} />
+                  <Input type="number" onChange={(e) => handleCoordinateChange(0, "x", e.target.value)} />
+                  <Input type="number" onChange={(e) => handleCoordinateChange(1, "x", e.target.value)} />
+                  <Input type="number" onChange={(e) => handleCoordinateChange(2, "x", e.target.value)} />
                 </div>
                 <div className="space-y-2 text-black"> 
                   <p className="text-white">Sumbu-Y</p>
-                  <Input type="number" onChange={(e) => setTempCoordinates(prevState => [...prevState.slice(0, -1), { ...prevState.slice(-1)[0], y: e.target.value }])} />
-                  <Input type="number" onChange={(e) => setTempCoordinates(prevState => [...prevState.slice(0, -1), { ...prevState.slice(-1)[0], y: e.target.value }])} />
-                  <Input type="number" onChange={(e) => setTempCoordinates(prevState => [...prevState.slice(0, -1), { ...prevState.slice(-1)[0], y: e.target.value }])} />
+                  <Input type="number" onChange={(e) => handleCoordinateChange(0, "y", e.target.value)} />
+                  <Input type="number" onChange={(e) => handleCoordinateChange(1, "y", e.target.value)} />
+                  <Input type="number" onChange={(e) => handleCoordinateChange(2, "y", e.target.value)} />
                 </div>
               </TabsContent>
 
@@ -109,8 +118,8 @@ export default function Home() {
                 {Array.from({ length: npoints }, (_, index) => (
                   <div key={index} className="space-y-2 mt-2 text-black">
                     <p className="text-white">Titik ke-{index+1}</p>
-                    <Input className="text-black max-w-[200px]" type="number" onChange={(e) => handleCoordinateChange(index, "x", e.target.value)} />
-                    <Input className="text-black max-w-[200px]" type="number" onChange={(e) => handleCoordinateChange(index, "y", e.target.value)} />
+                    <Input type="number" onChange={(e) => handleCoordinateChange(index, "x", e.target.value)} />
+                    <Input type="number" onChange={(e) => handleCoordinateChange(index, "y", e.target.value)} />
                   </div>
                 ))}
                 </div>
