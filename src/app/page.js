@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 import LineChart from "@/components/LineChart";
 import { DivideAndConquer } from "@/utils/DivideAndConquer";
-import { BruteForce } from "@/utils/BruteForce";
+import { quadraticBezierGeneratorBruteForce as BruteForce } from "@/utils/BruteForce";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
