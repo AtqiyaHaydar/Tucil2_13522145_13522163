@@ -62,7 +62,7 @@ export default function Home() {
     const result = BruteForce(useCoordinates, iter);
     console.log(result);
 
-    setResultCoordinates(result);
+    // setResultCoordinates(result);
   }
 
   const handleSubmitBF = () => {
@@ -70,7 +70,7 @@ export default function Home() {
     const result = DivideAndConquer(useCoordinates, iter);
     console.log(result);
 
-    setResultCoordinates(result);
+    // setResultCoordinates(result);
   }
   
 
@@ -151,7 +151,7 @@ export default function Home() {
             <div className="w-full h-[1px] bg-white/25" />
             <div className="space-y-2">
               <p className="font-semibold">Masukkan jumlah iterasi</p>
-              <Input placeholder="1" value={iter} onChange={(e) => setIter(e)} className="max-w-[250px]" />
+              <Input type="number" value={iter} onChange={(e) => setIter(e.target.value)} className="max-w-[250px] text-black" />
             </div>
             <div className="space-x-4">
               <Button onClick={handleSubmitDnC}>Submit with DnC</Button>
