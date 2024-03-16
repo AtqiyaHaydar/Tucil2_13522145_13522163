@@ -1,7 +1,6 @@
 "use client"
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
 import LineChart from "@/components/LineChart";
 import { DivideAndConquer } from "@/utils/DivideAndConquer";
@@ -18,12 +17,10 @@ import {
 
 export default function Home() { 
   const [npoints, setNpoints] = useState(3);
-  const [iter, setIter] = useState(1);
+  const [iter, setIter] = useState(0);
   const [tempCoordinates, setTempCoordinates] = useState([]);
   const [useCoordinates, setUseCoordinates] = useState([]);
   const [resultCoordinates, setResultCoordinates] = useState([]);
-
-  const router = useRouter();
 
   const handleCoordinateChange = (index, axis, value) => {
     setTempCoordinates(prevCoordinates => {
@@ -54,23 +51,23 @@ export default function Home() {
   const handleReset = () => {
     setUseCoordinates([])
     setTempCoordinates([])
-    router.refresh()
+    location.reload()
   }
 
   const handleSubmitDnC = () => {
     console.log("Submit DnC");
-    const result = BruteForce(useCoordinates, iter);
+    const result = DivideAndConquer(useCoordinates, iter);
     console.log(result);
 
-    // setResultCoordinates(result);
+    setResultCoordinates(result);
   }
 
   const handleSubmitBF = () => {
     console.log("Submit BF");
-    const result = DivideAndConquer(useCoordinates, iter);
+    const result = BruteForce(useCoordinates, iter);
     console.log(result);
 
-    // setResultCoordinates(result);
+    setResultCoordinates(result);
   }
   
 
@@ -163,3 +160,8 @@ export default function Home() {
     </main>
   );
 }
+
+// TO DO
+// 1. Menampilkan waktu eksekusi
+// 2. Implementasi fungsi DnC dan BF
+// 3. Menampilan proses iterasi, atau menyimpan hasil iterasi menggunakan slider
