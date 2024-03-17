@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 import LineChart from "@/components/LineChart";
 import { DivideAndConquer } from "@/utils/DivideAndConquer";
-import { quadraticBezierGeneratorBruteForce as BruteForce } from "@/utils/BruteForce";
+import { quadraticBezierGeneratorBruteForce as BruteForce3Point, BezierGeneratorBruteForce as BruteForceNPoint } from "@/utils/BruteForce";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,6 +18,7 @@ import {
 export default function Home() { 
   const [npoints, setNpoints] = useState(3);
   const [iter, setIter] = useState(0);
+  const [mode, setMode] = useState('3P');
   const [tempCoordinates, setTempCoordinates] = useState([]);
   const [useCoordinates, setUseCoordinates] = useState([]);
   const [resultCoordinates, setResultCoordinates] = useState([]);
@@ -64,7 +65,14 @@ export default function Home() {
 
   const handleSubmitBF = () => {
     console.log("Submit BF");
-    const result = BruteForce(useCoordinates, iter);
+
+    let result;
+    if (mode === '3P') {
+      result = BruteForce3Point(useCoordinates, iter);
+    } else if (mode === 'NP') {
+      result = BruteForceNPoint(useCoordinates, npoints, iter)
+    }
+
     console.log(result);
 
     setResultCoordinates(result);
@@ -97,8 +105,8 @@ export default function Home() {
             <Tabs defaultValue="3-Points">
               {/* PILIH MODE */}
               <TabsList className="bg-black text-white">
-                <TabsTrigger value="3-Points">3-Points</TabsTrigger>
-                <TabsTrigger value="N-Points">N-Points</TabsTrigger>
+                <TabsTrigger value="3-Points" onClick={() => setMode("3P")}>3-Points</TabsTrigger>
+                <TabsTrigger value="N-Points" onClick={() => setMode("NP")}>N-Points</TabsTrigger>
               </TabsList>
 
               {/* MASUKKAN 3POINT */}
