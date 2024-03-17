@@ -32,7 +32,7 @@ function LineChart({ coordinates }) {
         borderColor: "#b182e3",
         borderWidth: 3,
         pointBorderColor: "#b182e3",
-        pointBorderWidth: 3,
+        pointBorderWidth: 1,
       },
     ],
   };
@@ -88,7 +88,7 @@ function LineChart({ coordinates }) {
     },
   };
 
-  return <Line data={data} options={options}></Line>;
+  return <Line data={data} height={500} width={700} options={options}></Line>;
 }
 
 export default LineChart;

@@ -17,7 +17,7 @@ export function divideAndConquer(points, iterations) {
         newPoints.push(q);
       }
     }
-    newPoints.push(points[points.length - 1]); // Menambahkan titik akhir
+    newPoints.push({ x: points[points.length - 1].x, y: points[points.length - 1].y }); // Menambahkan titik akhir
     return divideAndConquer(newPoints, iterations - 1);
   }
 }
