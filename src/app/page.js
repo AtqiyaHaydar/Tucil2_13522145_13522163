@@ -22,6 +22,7 @@ export default function Home() {
   const [tempCoordinates, setTempCoordinates] = useState([]);
   const [useCoordinates, setUseCoordinates] = useState([]);
   const [resultCoordinates, setResultCoordinates] = useState([]);
+  const [timeExecution, setTimeExecution] = useState(0);
 
   const handleCoordinateChange = (index, axis, value) => {
     setTempCoordinates(prevCoordinates => {
@@ -57,9 +58,13 @@ export default function Home() {
 
   const handleSubmitDnC = () => {
     console.log("Submitted DnC");
+    
+    const start = performance.now()
     const result = divideAndConquer(useCoordinates, iter);
     console.log(result);
+    const end = performance.now()
 
+    setTimeExecution((end - start).toFixed(3));
     setResultCoordinates(result);
   }
 
@@ -158,9 +163,10 @@ export default function Home() {
               <p className="font-semibold">Masukkan jumlah iterasi</p>
               <Input type="number" value={iter} onChange={(e) => setIter(e.target.value)} className="max-w-[250px] text-black" />
             </div>
-            <div className="space-x-4">
+            <div className="flex flex-row gap-4 items-center">
               <Button onClick={handleSubmitDnC}>Submit with DnC</Button>
               <Button onClick={handleSubmitBF}>Submit with BF</Button>
+              <p className="ml-[75px]">Time Execution : {timeExecution} ms </p>
             </div>
           </div>
         </div>
