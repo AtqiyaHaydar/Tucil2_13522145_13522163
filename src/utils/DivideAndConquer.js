@@ -1,44 +1,23 @@
-function midpoint(p1, p2) {
+function calculateMidpoint(p0, p1, t) {
   return {
-    x: (p1.x + p2.x) / 2,
-    y: (p1.y + p2.y) / 2
+    x: (1 - t) * p0.x + t * p1.x,
+    y: (1 - t) * p0.y + t * p1.y
   }
 }
 
-function bezierControlPoint(p0, p1, p2, t) {
-  return {
-    x: Math.pow(1 - t, 2) * p0.x + 2 * (1 - t) * t * p1.x + Math.pow(t, 2) * p2.x,
-    y: Math.pow(1 - t, 2) * p0.y + 2 * (1 - t) * t * p1.y + Math.pow(t, 2) * p2.y
-  }
-}
-
-export function DivideAndConquer(points, iter) {
-  if (iter === 0) {
+export function divideAndConquer(points, iterations) {
+  if (iterations === 0) {
     return points;
-  }
-
-  const newPoints = [];
-  for (let i = 0; i < points.length - 1; i++) {
-    const midPoint = midpoint(points[i], points[i + 1]);
-    newPoints.push(midPoint);
-  }
-
-
-  const bezierPoints = [];
-  for (let i = 0; i < newPoints.length - 1; i++) {
-    const t = i / (newPoints.length - 1);
-    const controlPoint = bezierControlPoint(newPoints[i], points[i + 1], newPoints[i + 1], t);
-    bezierPoints.push(controlPoint);
-    bezierPoints.push(newPoints[i + 1]);
-  }
-
-  const updatedPoints = []
-  for (let i = 0; i < points.length; i++) {
-    updatedPoints.push(points[i]);
-    if (i < points.length - 1) {
-      updatedPoints.push(bezierPoints[i]);
+  } else {
+    let newPoints = [];
+    newPoints.push(points[0]); // Menambahkan titik awal
+    for (let i = 0; i < points.length - 1; i++) {
+      if (i !== points.length - 1) {
+        const q = calculateMidpoint(points[i], points[i + 1], 0.5);
+        newPoints.push(q);
+      }
     }
+    newPoints.push(points[points.length - 1]); // Menambahkan titik akhir
+    return divideAndConquer(newPoints, iterations - 1);
   }
-
-  return DivideAndConquer(updatedPoints, iter - 1);
 }

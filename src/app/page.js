@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 import LineChart from "@/components/LineChart";
-import { DivideAndConquer } from "@/utils/DivideAndConquer";
+import { divideAndConquer } from "@/utils/DivideAndConquer";
 import { quadraticBezierGeneratorBruteForce as BruteForce3Point, BezierGeneratorBruteForce as BruteForceNPoint } from "@/utils/BruteForce";
 
 import { Button } from "@/components/ui/button";
@@ -56,15 +56,15 @@ export default function Home() {
   }
 
   const handleSubmitDnC = () => {
-    console.log("Submit DnC");
-    const result = DivideAndConquer(useCoordinates, iter);
+    console.log("Submitted DnC");
+    const result = divideAndConquer(useCoordinates, iter);
     console.log(result);
 
     setResultCoordinates(result);
   }
 
   const handleSubmitBF = () => {
-    console.log("Submit BF");
+    console.log("Submitted BF");
 
     let result;
     if (mode === '3P') {
@@ -168,8 +168,3 @@ export default function Home() {
     </main>
   );
 }
-
-// TO DO
-// 1. Menampilkan waktu eksekusi
-// 2. Implementasi fungsi DnC dan BF
-// 3. Menampilan proses iterasi, atau menyimpan hasil iterasi menggunakan slider
