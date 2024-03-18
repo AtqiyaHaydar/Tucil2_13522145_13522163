@@ -151,7 +151,7 @@ export default function Home() {
           <LineChart coordinates={resultCoordinates} />
           {isSubmitted && (
             <div className="text-black flex flex-row items-center gap-x-2">
-              <p>Animasi <span className="text-black/75 text-[14px]">(menaik turunkan iterasi dengan tombol panah atas bawah untuk melihat animasi)</span></p>
+              <p>Animasi <span className="text-black/75 text-[14px]">(menaik turunkan iterasi dengan tombol panah atas bawah untuk melihat animasi, input tidak boleh = 0)</span></p>
               
               {/* ANIMASI KURVA */}
               <Input 
@@ -236,7 +236,7 @@ export default function Home() {
             <div className="flex flex-row gap-4 items-center">
               <Button onClick={() => {
                 toast({
-                  title: "Submitted With DnC!",
+                  title: "Submitted With Divide And Conquer!",
                   description: "The result is shown in the graph."
                 })
                 handleSubmitDnC()
@@ -244,7 +244,7 @@ export default function Home() {
               }}>Submit with DnC</Button>
               <Button onClick={() => {
                 toast({
-                  title: "Submitted With BF!",
+                  title: "Submitted With Brute Force!",
                   description: "The result is shown in the graph."
                 })
                 handleSubmitBF()
