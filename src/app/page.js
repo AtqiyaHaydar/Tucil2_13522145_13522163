@@ -18,7 +18,7 @@ import { useToast } from "@/components/ui/use-toast"
 
 export default function Home() { 
   const [npoints, setNpoints] = useState(3);
-  const [iter, setIter] = useState(0);
+  const [iter, setIter] = useState(1);
   const [mode, setMode] = useState('3P');
   const [tempCoordinates, setTempCoordinates] = useState([]);
   const [useCoordinates, setUseCoordinates] = useState([]);
@@ -151,17 +151,21 @@ export default function Home() {
           <LineChart coordinates={resultCoordinates} />
           {isSubmitted && (
             <div className="text-black flex flex-row items-center gap-x-2">
-              <p>Animasi <span className="text-black/75 text-[14px]">(menaik turunkan iterasi dengan tombol panah atas bawah untuk melihat animasi, input tidak boleh = 0)</span></p>
+              <p>Animasi <span class="text-black/75 text-[14px]">(menaik turunkan iterasi dengan tombol panah atas bawah untuk melihat animasi, input &gt;= 1 dan input &lt;= iter)</span></p>
               
-              {/* ANIMASI KURVA */}
-              <Input 
-                type="number"
-                value={iter}
-                onChange={(e) => {
-                  setIter(e.target.value)
-                }}
-                className="w-[100px]"
-              />
+                {/* ANIMASI KURVA */}
+                <Input 
+                  type="number"
+                  value={iter}
+                  onChange={(e) => {
+                    const inputValue = parseInt(e.target.value);
+                    if (inputValue >= 1) {
+                      setIter(inputValue);
+                    }
+                  }}
+                  className="w-[100px]"
+                  min={1}
+                />
             </div>
           )}
         </div>
@@ -230,7 +234,7 @@ export default function Home() {
           <div className="w-full flex flex-col justify-center md:justify-start gap-y-4">
             <div className="w-full h-[1px] bg-white/25" />
             <div className="space-y-2">
-              <p className="font-semibold">Masukkan jumlah iterasi</p>
+              <p className="font-semibold">Masukkan jumlah iterasi <span className="text-[14px] font-normal">(min 1)</span></p>
               <Input type="number" value={iter} onChange={(e) => setIter(e.target.value)} className="max-w-[250px] text-black" />
             </div>
             <div className="flex flex-row gap-4 items-center">
