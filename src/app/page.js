@@ -14,6 +14,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function Home() { 
   const [npoints, setNpoints] = useState(3);
@@ -25,6 +26,8 @@ export default function Home() {
   const [timeExecution, setTimeExecution] = useState(0);
   const [method, setMethod] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
+
+  const { toast } = useToast();
 
   const handleCoordinateChange = (index, axis, value) => {
     setTempCoordinates(prevCoordinates => {
@@ -68,10 +71,6 @@ export default function Home() {
 
     setTimeExecution((end - start).toFixed(3));
   }
-
-  useEffect(() => {
-    console.log("Result Coordinates updated:", resultCoordinates);
-  }, [resultCoordinates]);
 
   function divideAndConquerAlgorithm({ points, iteration, setResultCoordinate }) {
     const calculateBezier = () => {
@@ -215,7 +214,13 @@ export default function Home() {
 
             {/* SAVE POINTS*/}
             <div className="space-x-4">
-              <Button onClick={handleSavePoints}>Save Points</Button>
+              <Button onClick={() => {
+                handleSavePoints()
+                toast({
+                  title: "Points Saved!",
+                  description: "You don't need to input the points again."
+                })
+              }}>Save Points</Button>
               <Button onClick={handleReset}>Reset</Button>
             </div>
           </div>
@@ -230,10 +235,18 @@ export default function Home() {
             </div>
             <div className="flex flex-row gap-4 items-center">
               <Button onClick={() => {
+                toast({
+                  title: "Submitted With DnC!",
+                  description: "The result is shown in the graph."
+                })
                 handleSubmitDnC()
                 setIsSubmitted(true)
               }}>Submit with DnC</Button>
               <Button onClick={() => {
+                toast({
+                  title: "Submitted With BF!",
+                  description: "The result is shown in the graph."
+                })
                 handleSubmitBF()
                 setIsSubmitted(true)
               }}>Submit with BF</Button>
