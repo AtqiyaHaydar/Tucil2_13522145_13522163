@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 import LineChart from "@/components/LineChart";
-import { divideAndConquer } from "@/utils/DivideAndConquer";
+import { divncon } from "@/utils/DivideAndConquer";
 import { quadraticBezierGeneratorBruteForce as BruteForce3Point, BezierGeneratorBruteForce as BruteForceNPoint } from "@/utils/BruteForce";
 
 import { Button } from "@/components/ui/button";
@@ -47,7 +47,7 @@ export default function Home() {
   };
 
   const handleSavePoints = () => {
-    console.log(tempCoordinates)
+    console.log("Ini adalah coordinate yang akan dipakai", tempCoordinates)
     setUseCoordinates(tempCoordinates);
     setTempCoordinates([])
   }
@@ -63,24 +63,48 @@ export default function Home() {
     setMethod('DnC')
     
     const start = performance.now()
-    const result = divideAndConquer(useCoordinates, iter);
-    console.log(result);
+    divideAndConquerAlgorithm({ points: useCoordinates, iteration: iter, setResultCoordinate: setResultCoordinates })
     const end = performance.now()
 
     setTimeExecution((end - start).toFixed(3));
-    setResultCoordinates(result);
+  }
+
+  useEffect(() => {
+    console.log("Result Coordinates updated:", resultCoordinates);
+  }, [resultCoordinates]);
+
+  function divideAndConquerAlgorithm({ points, iteration, setResultCoordinate }) {
+    const calculateBezier = () => {
+      const nIteration = parseInt(iteration);
+      let curvePoints = [];
+      // const sortedCoordinates = points.slice().sort((a, b) => a.x - b.x)
+      // console.log("Ini adalah sortedCoordinates", sortedCoordinates)
+
+      curvePoints.push(points[0]) // titik awal
+      let NewPointPoints = (divncon(points, [], [], 0, nIteration, setResultCoordinate))
+      curvePoints = [...curvePoints, ...NewPointPoints]
+      curvePoints.push(points[points.length - 1]) // titik akhir
+
+      console.log("Ini adalah curvePoints", curvePoints)
+
+      setResultCoordinate(curvePoints)
+    }
+    
+    calculateBezier();
   }
 
   const handleSubmitBF = () => {
     console.log("Submitted BF");
     setMethod('BF')
 
+    const start = performance.now()
     let result;
     if (mode === '3P') {
       result = BruteForce3Point(useCoordinates, iter);
     } else if (mode === 'NP') {
       result = BruteForceNPoint(useCoordinates, npoints, iter)
     }
+    const end = performance.now()
 
     console.log(result);
 
@@ -91,28 +115,25 @@ export default function Home() {
     if (isSubmitted) {
       if (method === 'DnC') {
         const start = performance.now()
-        const result = divideAndConquer(useCoordinates, iter);
-        console.log(result);
+        divideAndConquerAlgorithm({ points: useCoordinates, iteration: iter, setResultCoordinate: setResultCoordinates })
         const end = performance.now()
-
         setTimeExecution((end - start).toFixed(3));
-        setResultCoordinates(result);
       } else if (method === 'BF') {
+        const start = performance.now()
         let result;
         if (mode === '3P') {
           result = BruteForce3Point(useCoordinates, iter);
         } else if (mode === 'NP') {
           result = BruteForceNPoint(useCoordinates, npoints, iter)
         }
+        const end = performance.now()
 
-        console.log(result);
-
+        setTimeExecution((end - start).toFixed(3));
         setResultCoordinates(result)
       }
     }
   }, [iter])
   
-
   return (
     <main className="bg-gradient-to-br from-blue-400 to-purple-400 w-full h-full p-8 flex items-center justify-center flex-col gap-y-4 text-white">
 

@@ -1,75 +1,44 @@
-// function calculateMidpoint(p0, p1, t) {
-//   return {
-//     x: (1 - t) * p0.x + t * p1.x,
-//     y: (1 - t) * p0.y + t * p1.y
-//   }
-// }
-
-// export function divideAndConquer(points, iterations) {
-//   if (iterations === 0) {
-//     return points;
-//   } else {
-//     let newPoints = [];
-//     newPoints.push(points[0]); // Menambahkan titik awal
-//     for (let i = 0; i < points.length - 1; i++) {
-//       if (i !== points.length - 1) {
-//         const q = calculateMidpoint(points[i], points[i + 1], 0.5);
-//         newPoints.push(q);
-//       }
-//     }
-//     newPoints.push({ x: points[points.length - 1].x, y: points[points.length - 1].y }); // Menambahkan titik akhir
-//     return divideAndConquer(newPoints, iterations - 1);
-//   }
-// }
-
-function calculateMidpoint(p0, p1, t) {
-  return {
-    x: (1 - t) * p0.x + t * p1.x,
-    y: (1 - t) * p0.y + t * p1.y
+const midpoint = (p1, p2) => (
+  // console.log(p1),
+  // console.log(p2),
+  // console.log("TTIK X: ", parseFloat(p1.x + p2.x) / 2),
+  // console.log("TITIK Y: ", parseFloat(p1.y + p2.y) / 2),
+  {
+  x: (parseFloat(p1.x) + parseFloat(p2.x)) / 2,
+  y: (parseFloat(p1.y) + parseFloat(p2.y)) / 2
   }
-}
+);
 
-export function divideAndConquer(points, iterations) {
-  if (iterations === 0) {
-    return points;
+// Fungsi untuk melakukan reduksi titik menggunakan algoritma divide and conquer
+export const divncon = (arr, left, right, iter, iterations, setResultCoordinate) => {
+  let leftArr = [arr[0]];
+  let rightArr = [arr[arr.length - 1]];
+
+  while (arr.length > 1) {
+    let newArr = [];
+    for (let i = 0; i < arr.length - 1; i++) {
+      newArr.push(midpoint(arr[i], arr[i + 1]));
+    }
+
+    leftArr = leftArr.concat([newArr[0]]);
+    rightArr = [newArr[newArr.length - 1]].concat(rightArr);
+    arr = newArr;
+  }
+
+  if (iter === iterations - 1) {
+    setResultCoordinate(arr);
+    return arr;
   } else {
-    let newPoints = [];
-
-    let midPointIndex = Math.floor(points.length / 2);
-
-    const leftPoints = conquerLeft(points.slice(0, midPointIndex + 1))
-    const rightPoints = conquerRight(points.slice(midPointIndex))
-
-    newPoints = [...leftPoints, ...rightPoints]
-
-    return divideAndConquer(newPoints, iterations - 1);
+    iter += 1;
+    return divncon(
+      leftArr.concat(arr),
+      left,
+      arr,
+      iter,
+      iterations,
+      setResultCoordinate
+    ).concat(arr).concat(
+      divncon(arr.concat(rightArr), [], right, iter, iterations, setResultCoordinate)
+    );
   }
-}
-
-function conquerLeft(points) {
-  let leftPoints = [];
-
-  // Menambahkan titik awal dari input
-  leftPoints.push(points[0]);
-
-  for (let i = 0; i < points.length - 1; i++) {
-    const q = calculateMidpoint(points[i], points[i + 1], 0.5);
-    leftPoints.push(q); 
-  }
-
-  return leftPoints;
-}
-
-function conquerRight(points) {
-  let rightPoints = [];
-
-  for (let i = 0; i < points.length - 1; i++) {
-    const q = calculateMidpoint(points[i], points[i + 1], 0.5);
-    rightPoints.push(q); 
-  }
-
-  // Menambahkan titik akhir dari input
-  rightPoints.push(points[points.length - 1])
-
-  return rightPoints;
-}
+};
