@@ -23,6 +23,8 @@ export default function Home() {
   const [useCoordinates, setUseCoordinates] = useState([]);
   const [resultCoordinates, setResultCoordinates] = useState([]);
   const [timeExecution, setTimeExecution] = useState(0);
+  const [method, setMethod] = useState('')
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   const handleCoordinateChange = (index, axis, value) => {
     setTempCoordinates(prevCoordinates => {
@@ -58,6 +60,7 @@ export default function Home() {
 
   const handleSubmitDnC = () => {
     console.log("Submitted DnC");
+    setMethod('DnC')
     
     const start = performance.now()
     const result = divideAndConquer(useCoordinates, iter);
@@ -70,6 +73,7 @@ export default function Home() {
 
   const handleSubmitBF = () => {
     console.log("Submitted BF");
+    setMethod('BF')
 
     let result;
     if (mode === '3P') {
@@ -82,6 +86,31 @@ export default function Home() {
 
     setResultCoordinates(result);
   }
+
+  useEffect(() => {
+    if (isSubmitted) {
+      if (method === 'DnC') {
+        const start = performance.now()
+        const result = divideAndConquer(useCoordinates, iter);
+        console.log(result);
+        const end = performance.now()
+
+        setTimeExecution((end - start).toFixed(3));
+        setResultCoordinates(result);
+      } else if (method === 'BF') {
+        let result;
+        if (mode === '3P') {
+          result = BruteForce3Point(useCoordinates, iter);
+        } else if (mode === 'NP') {
+          result = BruteForceNPoint(useCoordinates, npoints, iter)
+        }
+
+        console.log(result);
+
+        setResultCoordinates(result)
+      }
+    }
+  }, [iter])
   
 
   return (
@@ -100,6 +129,21 @@ export default function Home() {
         {/* MENAMPILKAN GRAFIK */}
         <div className="w-full h-full min-h-[550px] bg-white rounded-xl p-4 flex flex-col items-center justify-center">
           <LineChart coordinates={resultCoordinates} />
+          {isSubmitted && (
+            <div className="text-black flex flex-row items-center gap-x-2">
+              <p>Animasi <span className="text-black/75 text-[14px]">(menaik turunkan iterasi dengan tombol panah atas bawah untuk melihat animasi)</span></p>
+              
+              {/* ANIMASI KURVA */}
+              <Input 
+                type="number"
+                value={iter}
+                onChange={(e) => {
+                  setIter(e.target.value)
+                }}
+                className="w-[100px]"
+              />
+            </div>
+          )}
         </div>
 
         {/* MENERIMA MASUKKAN POINTS */}
@@ -140,8 +184,8 @@ export default function Home() {
                 {Array.from({ length: npoints }, (_, index) => (
                   <div key={index} className="space-y-2 mt-2 text-black">
                     <p className="text-white">Titik ke-{index+1}</p>
-                    <Input type="number" onChange={(e) => handleCoordinateChange(index, "x", e.target.value)} />
-                    <Input type="number" onChange={(e) => handleCoordinateChange(index, "y", e.target.value)} />
+                    <Input type="number" onChange={(e) => handleCoordinateChange(index, "x", e.target.value)} placeholder="x"/>
+                    <Input type="number" onChange={(e) => handleCoordinateChange(index, "y", e.target.value)} placeholder="y"/>
                   </div>
                 ))}
                 </div>
@@ -164,8 +208,14 @@ export default function Home() {
               <Input type="number" value={iter} onChange={(e) => setIter(e.target.value)} className="max-w-[250px] text-black" />
             </div>
             <div className="flex flex-row gap-4 items-center">
-              <Button onClick={handleSubmitDnC}>Submit with DnC</Button>
-              <Button onClick={handleSubmitBF}>Submit with BF</Button>
+              <Button onClick={() => {
+                handleSubmitDnC()
+                setIsSubmitted(true)
+              }}>Submit with DnC</Button>
+              <Button onClick={() => {
+                handleSubmitBF()
+                setIsSubmitted(true)
+              }}>Submit with BF</Button>
               <p className="ml-[75px]">Time Execution : {timeExecution} ms </p>
             </div>
           </div>
