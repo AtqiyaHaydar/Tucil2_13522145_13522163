@@ -27,15 +27,14 @@ function BezierFormula(points, n, t) {
 
 export function BezierGeneratorBruteForce(points, n, iterations) {
   let result = [];
-  result.push(points[0]);
 
-  for (let i = 0; i <= iterations; i++) {
-      const t = i / iterations;
+  let total = Math.pow(2, iterations) - 1; 
+
+  for (let i = 0; i <= total; i++) {
+      const t = i / total;
       const point = BezierFormula(points, n, t);
       result.push(point);
   }
-
-  result.push(points[n - 1]);
   
   return result;
 }
@@ -50,15 +49,14 @@ function quadraticBezierFormula(points, t) {
 
 export function quadraticBezierGeneratorBruteForce(points, iterations) {
   let result = [];
-  result.push(points[0]);
 
-  for (let i = 0; i <= iterations; i++) {
-      const t = i / iterations;
+  let total = Math.pow(2, iterations) - 1;
+
+  for (let i = 0; i <= total; i++) {
+      const t = i / total;
       const point = quadraticBezierFormula(points, t);
       result.push(point);
   }
-
-  result.push(points[2]);
 
   return result;
 }

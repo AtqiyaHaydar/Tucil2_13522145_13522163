@@ -45,6 +45,7 @@ function LineChart({ coordinates }) {
     responsive: true,
     scales: {
       y: {
+        type: "linear",
         ticks: {
           font: {
             size: 14,
@@ -66,6 +67,7 @@ function LineChart({ coordinates }) {
         min: 0,
       },
       x: {
+        type: "linear",
         ticks: {
           font: {
             size: 12,
