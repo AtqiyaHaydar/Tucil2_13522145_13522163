@@ -81,7 +81,7 @@ While the project is functional, there are areas where improvements can be made:
 
 
 ## Contact
-For any inquiries or feedback, feel free to contact the project creator @fnathas & @AtqiyaHaydar.
+For any inquiries or feedback, feel free to contact the project creator [@fnathas](https://github.com/fnathas) & [@AtqiyaHaydar](https://github.com/AtqiyaHaydar).
 
 <!-- Optional -->
 <!-- ## License -->
