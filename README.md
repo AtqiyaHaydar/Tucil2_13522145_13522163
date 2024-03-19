@@ -1,6 +1,6 @@
 # Tugas Kecil 2 IF2211 Strategi Algoritma
-> Outline a brief description of your project.
-> Live demo [_here_](https://www.example.com). <!-- If you have the project hosted somewhere, include the link here. -->
+> Live Website Tucil
+> Live demo [_here_](https://tucil2-13522145-13522163-t4uo.vercel.app/ ). <!-- If you have the project hosted somewhere, include the link here. -->
 
 ## Table of Contents
 * [General Info](#general-information)
@@ -25,20 +25,20 @@
 
 
 ## Technologies Used
-- Tech 1 - version 1.0
-- Tech 2 - version 2.0
-- Tech 3 - version 3.0
+- Next JS 14.1.3
+- Tailwind CSS 3.30
+- Shadcn UI
+- Chart JS 4.4.2
 
 
 ## Features
-List the ready features here:
-- Awesome feature 1
-- Awesome feature 2
-- Awesome feature 3
+- Create bezier curve with divide and conquer algorithm
+- Create bezier curve with brufe force algorithm
+- N points input for both algorithm
 
 
 ## Screenshots
-![Example screenshot](./img/screenshot.png)
+![Program GUI](./test/GUI.png)
 <!-- If you have screenshots you'd like to share, include them here. -->
 
 
@@ -49,26 +49,32 @@ Proceed to describe how to install / setup one's local environment / get started
 
 
 ## Usage
-How does one go about using it?
-Provide various use cases and code examples here.
+1. Clone the repository
+`git clone https://github.com/AtqiyaHaydar/Tucil2_13522145_13522163.git`
 
-`write-your-code-here`
+2. Change directory to ./src/
+`cd ./src/`
+
+3. Install node package manager (this includes installing all dependencies)
+`npm install`
+
+4. Run the project
+`npm run dev`
+
+5. Visit http://localhost:3000/ in your browser
+
 
 
 ## Project Status
-Project is: _in progress_ / _complete_ / _no longer being worked on_. If you are no longer working on it, provide reasons why.
+Project is: _complete_
 
 
 ## Room for Improvement
-Include areas you believe need improvement / could be improved. Also add TODOs for future development.
-
 Room for improvement:
-- Improvement to be done 1
-- Improvement to be done 2
+- The program must be able to process more quickly than 10 iterations
 
 To do:
-- Feature to be added 1
-- Feature to be added 2
+- Optimizing the front end of the program to produce graphics faster
 
 
 ## Acknowledgements
