@@ -1,6 +1,6 @@
 # Tugas Kecil 2 IF2211 Strategi Algoritma
 > Live Website Tucil
-> Live demo [_here_](https://tucil2-13522145-13522163-t4uo.vercel.app/ ). <!-- If you have the project hosted somewhere, include the link here. -->
+> [_here_](https://tucil2-13522145-13522163-t4uo.vercel.app/ ). <!-- If you have the project hosted somewhere, include the link here. -->
 
 ## Table of Contents
 * [General Info](#general-information)
@@ -52,7 +52,7 @@ Proceed to describe how to install / setup one's local environment / get started
 1. Clone the repository
 `git clone https://github.com/AtqiyaHaydar/Tucil2_13522145_13522163.git`
 
-2. Change directory to ./src/
+2. Change directory to src
 `cd ./src/`
 
 3. Install node package manager (this includes installing all dependencies)
