@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 import LineChart from "@/components/LineChart";
-import { divncon } from "@/utils/DivideAndConquer";
+import { divideAndConquer } from "@/utils/DivideAndConquer";
 import { quadraticBezierGeneratorBruteForce as BruteForce3Point, BezierGeneratorBruteForce as BruteForceNPoint } from "@/utils/BruteForce";
 
 import { Button } from "@/components/ui/button";
@@ -50,7 +50,6 @@ export default function Home() {
   };
 
   const handleSavePoints = () => {
-    console.log("Ini adalah coordinate yang akan dipakai", tempCoordinates)
     setUseCoordinates(tempCoordinates);
     setTempCoordinates([])
   }
@@ -62,38 +61,22 @@ export default function Home() {
   }
 
   const handleSubmitDnC = () => {
-    console.log("Submitted DnC");
     setMethod('DnC')
-    
     const start = performance.now()
-    divideAndConquerAlgorithm({ points: useCoordinates, iteration: iter, setResultCoordinate: setResultCoordinates })
+
+    const totalIteration = parseInt(iter)
+    let coordinatePoints = [];
+    coordinatePoints.push(useCoordinates[0])
+    let NewPointPoints = (divideAndConquer(useCoordinates, [], [], 0, totalIteration))
+    coordinatePoints = [...coordinatePoints, ...NewPointPoints]
+    coordinatePoints.push(useCoordinates[useCoordinates.length - 1])
     const end = performance.now()
 
+    setResultCoordinates(coordinatePoints)
     setTimeExecution((end - start).toFixed(3));
   }
 
-  function divideAndConquerAlgorithm({ points, iteration, setResultCoordinate }) {
-    const calculateBezier = () => {
-      const nIteration = parseInt(iteration);
-      let curvePoints = [];
-      // const sortedCoordinates = points.slice().sort((a, b) => a.x - b.x)
-      // console.log("Ini adalah sortedCoordinates", sortedCoordinates)
-
-      curvePoints.push(points[0]) // titik awal
-      let NewPointPoints = (divncon(points, [], [], 0, nIteration, setResultCoordinate))
-      curvePoints = [...curvePoints, ...NewPointPoints]
-      curvePoints.push(points[points.length - 1]) // titik akhir
-
-      console.log("Ini adalah curvePoints", curvePoints)
-
-      setResultCoordinate(curvePoints)
-    }
-    
-    calculateBezier();
-  }
-
   const handleSubmitBF = () => {
-    console.log("Submitted BF");
     setMethod('BF')
 
     const start = performance.now()
@@ -105,21 +88,17 @@ export default function Home() {
     }
     const end = performance.now()
 
-    console.log(result);
-
+    setTimeExecution((end - start).toFixed(3));
     setResultCoordinates(result);
   }
 
   useEffect(() => {
     if (isSubmitted) {
       if (method === 'DnC') {
-        const start = performance.now()
-        divideAndConquerAlgorithm({ points: useCoordinates, iteration: iter, setResultCoordinate: setResultCoordinates })
-        const end = performance.now()
-        setTimeExecution((end - start).toFixed(3));
+        handleSubmitDnC()
       } else if (method === 'BF') {
-        const start = performance.now()
         let result;
+        const start = performance.now()
         if (mode === '3P') {
           result = BruteForce3Point(useCoordinates, iter);
         } else if (mode === 'NP') {
@@ -235,7 +214,7 @@ export default function Home() {
             <div className="w-full h-[1px] bg-white/25" />
             <div className="space-y-2">
               <p className="font-semibold">Masukkan jumlah iterasi <span className="text-[14px] font-normal">(min 1)</span></p>
-              <Input type="number" value={iter} onChange={(e) => setIter(e.target.value)} className="max-w-[250px] text-black" />
+              <Input min={1} type="number" value={iter} onChange={(e) => setIter(e.target.value)} className="max-w-[250px] text-black" />
             </div>
             <div className="flex flex-row gap-4 items-center">
               <Button onClick={() => {
