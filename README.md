@@ -17,10 +17,11 @@
 
 
 ## General Information
-- Provide general information about your project here.
-- What problem does it (intend to) solve?
-- What is the purpose of your project?
-- Why did you undertake it?
+This project is a web application designed to create Bezier curves using two different algorithms: divide and conquer, and brute force. Bezier curves are widely used in computer graphics and animation to create smooth and natural-looking curves. The purpose of this project is to provide a platform for users to visualize and compare the results of these two algorithms in generating Bezier curves.
+
+The project aims to address the need for a tool that can efficiently demonstrate the differences between the divide and conquer algorithm and the brute force algorithm in creating Bezier curves. By allowing users to input the number of points and observe the resulting curves, they can gain insights into the efficiency and accuracy of each algorithm.
+
+The motivation behind undertaking this project is to deepen understanding of algorithmic strategies, particularly in the context of computational geometry and graphics. Additionally, creating a practical application for visualizing algorithmic concepts helps solidify learning and can serve as a valuable educational resource.
 <!-- You don't have to answer all the questions - just the ones relevant to your project. -->
 
 
@@ -43,12 +44,6 @@
 
 
 ## Setup
-What are the project requirements/dependencies? Where are they listed? A requirements.txt or a Pipfile.lock file perhaps? Where is it located?
-
-Proceed to describe how to install / setup one's local environment / get started with the project.
-
-
-## Usage
 1. Clone the repository
 `git clone https://github.com/AtqiyaHaydar/Tucil2_13522145_13522163.git`
 
@@ -64,29 +59,29 @@ Proceed to describe how to install / setup one's local environment / get started
 5. Visit http://localhost:3000/ in your browser
 
 
+## Usage
+Once the project is set up and running locally, users can access the web application through their browser. They can input the desired number of points and choose between the divide and conquer algorithm or the brute force algorithm to generate the corresponding Bezier curve. The application will then display the generated curve for visualization and comparison.
+
+
 
 ## Project Status
-Project is: _complete_
+The project is complete and fully functional.
 
 
 ## Room for Improvement
-Room for improvement:
-- The program must be able to process more quickly than 10 iterations
+While the project is functional, there are areas where improvements can be made:
 
-To do:
-- Optimizing the front end of the program to produce graphics faster
+- **Performance Optimization:** The program should be optimized to process iterations more quickly, especially for a large number of points.
+- **Frontend Optimization:** Enhancements can be made to improve the rendering speed of graphics on the frontend, ensuring a smoother user experience.
 
 
 ## Acknowledgements
-Give credit here.
-- This project was inspired by...
-- This project was based on [this tutorial](https://www.example.com).
-- Many thanks to...
+- This project was inspired by the study of algorithmic strategies and computational geometry.
+- The implementation of the divide and conquer and brute force algorithms was based on theoretical concepts and research in the field.
 
 
 ## Contact
-Created by [@flynerdpl](https://www.flynerd.pl/) - feel free to contact me!
-
+For any inquiries or feedback, feel free to contact the project creator @fnathas & @AtqiyaHaydar.
 
 <!-- Optional -->
 <!-- ## License -->
